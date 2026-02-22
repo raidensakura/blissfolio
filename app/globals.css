@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+/* Base colors */
+:root {
+    --background: #111116;
+    /* dark page background */
+    --foreground: #111116;
+
+    --accent-start: #a855f7;
+    --accent-end: #8b5cf6;
+    --accent-text: #ec4899;
+    --accent-border: #db2777;
+}
+
+/* Dark mode overrides using class strategy (preferred for toggle) */
+.dark {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+
+    --accent-start: #a855f7;
+    --accent-end: #8b5cf6;
+    --accent-text: #ec4899;
+    --accent-border: #db2777;
+}
+
+/* Apply variables to Tailwind theme-like CSS */
+body {
+    background-color: var(--background);
+    color: var(--foreground);
+}
+
+.card-tag {
+    @apply flex items-center gap-2 px-3 py-2 rounded-lg border;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.btn-primary {
+    @apply w-full flex items-center justify-center gap-2 py-3 rounded-xl transition;
+    background: linear-gradient(to right, var(--accent-start), var(--accent-end));
+
+    &:hover {
+        opacity: 0.9;
+    }
+}
+
+.btn-secondary {
+    @apply w-full flex items-center justify-center gap-2 py-3 rounded-xl border transition;
+    border-color: rgba(255, 255, 255, 0.1);
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+}
+
+.project-card,
+.social-card {
+    @apply p-4 rounded-xl border transition flex justify-between items-center;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.project-card:hover,
+.social-card:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.tab {
+    @apply text-gray-400 hover:text-white transition;
+}
+
+.tab-active {
+    color: var(--accent-text);
+    border-bottom: 2px solid var(--accent-border);
+    padding-bottom: 0.5rem;
+}

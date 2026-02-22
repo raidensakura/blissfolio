@@ -1,0 +1,63 @@
+'use client';
+
+import { Copy, ExternalLink } from 'lucide-react';
+import { useState } from 'react';
+import CopyButton from '../CopyButton';
+
+interface DomainCardProps {
+	domain: string;
+}
+
+export default function DomainCard({ domain }: DomainCardProps) {
+	const [imgError, setImgError] = useState(false);
+
+	const copyDomain = () => navigator.clipboard.writeText(domain);
+
+	const faviconUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+
+	return (
+		<div
+			className="relative p-5 rounded-2xl border border-purple-500/20
+                 bg-gradient-to-br from-[#15151c] to-[#111116]
+                 hover:border-purple-500/40 hover:shadow-purple-500/10
+                 transition shadow-lg"
+		>
+			<div className="flex flex-col sm:flex-row sm:items-center gap-3">
+				{/* Favicon */}
+				<div className="w-14 h-14 rounded-xl bg-white/5 flex items-center justify-center flex-shrink-0 overflow-hidden">
+					{!imgError ? (
+						<img
+							src={faviconUrl}
+							alt={`${domain} favicon`}
+							className="w-8 h-8 object-contain"
+							onError={() => setImgError(true)}
+						/>
+					) : (
+						<span className="text-purple-400 text-xl font-semibold">
+							{domain.charAt(0).toUpperCase()}
+						</span>
+					)}
+				</div>
+
+				{/* Domain Info */}
+				<div className="flex flex-col flex-1 gap-1 min-w-0">
+					<h3 className="font-semibold text-lg truncate">{domain}</h3>
+					<p className="text-sm text-gray-400 truncate">https://{domain}</p>
+				</div>
+
+				{/* Actions */}
+				<div className="flex gap-2 flex-shrink-0 self-start sm:self-center">
+					<CopyButton textToCopy={domain} />
+					<a
+						href={`https://${domain}`}
+						target="_blank"
+						rel="noopener noreferrer"
+						className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition"
+					>
+						<ExternalLink size={18} />
+					</a>
+				</div>
+			</div>
+		</div>
+	);
+}
