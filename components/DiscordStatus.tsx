@@ -18,12 +18,13 @@ interface DiscordActivity {
 	details?: string;
 	timestamps?: { start: number; end?: number };
 	assets?: { large_image?: string; small_image?: string; large_text?: string };
+    application_id?: string;
 }
 
 interface SpotifyData {
 	song: string;
 	artist: string;
-	album_art?: string;
+	album_art_url: string;
 	timestamps?: { start: number; end: number };
 }
 
