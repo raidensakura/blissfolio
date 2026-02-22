@@ -60,8 +60,8 @@ export default function TabsSection({ socials, games, domains, pcSpecs }: any) {
 				)}
 				{activeTab === 'domains' && (
 					<div className="space-y-4">
-						{domains.map((domain) => (
-							<DomainCard key={domain} domain={domain} />
+						{domains.map((d: any) => (
+							<DomainCard key={d.name} domain={d} />
 						))}
 					</div>
 				)}
