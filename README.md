@@ -1,7 +1,7 @@
 <img src="https://github.com/raidensakura/blissfolio/blob/master/public/icon.png" alt="Alt Text" width="300" align="center">
 
 See the demo [here](https://raidensakura.netlify.app/).
-# Blissfolio
+# Blissfolio [![Netlify Status](https://api.netlify.com/api/v1/badges/5fa3e86a-ce6f-45cc-9f99-c7f9646cfba6/deploy-status)](https://app.netlify.com/projects/raidensakura/deploys)
 A modern personal website built with Next.js 14, featuring:
 - 🎧 Discord rich presence display and Spotify now playing status*
 - 🛠️ Easy accent color customization
