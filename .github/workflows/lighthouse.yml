@@ -1,31 +1,47 @@
-name: Lighthouse CI
+name: Next.js + Lighthouse CI
 
 on:
   push:
-    branches:
-      - master
+    branches: [main]
   pull_request:
-    branches:
-      - master
 
 jobs:
   lhci:
     runs-on: ubuntu-latest
+    env:
+      PORT: 4000
+
     steps:
-      # 1. Checkout your repo
+      # Checkout code
       - uses: actions/checkout@v3
 
-      # 2. Setup Node.js
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      # Use Node.js
+      - uses: actions/setup-node@v3
         with:
           node-version: 20
 
-      # 3. Install dependencies
-      - name: Install dependencies
-        run: npm ci
+      # Install dependencies
+      - run: npm ci
 
-      # 4. Run Lighthouse CI
-      - name: Run Lighthouse CI
+      # Build the app
+      - run: npm run build
+
+      # Install Chromium for Lighthouse
+      - name: Install Chromium
+        run: sudo apt-get update && sudo apt-get install -y chromium-browser
+
+      # Start server in background
+      - name: Start Next.js
         run: |
-          npx lhci autorun --upload.target=temporary-public-storage
+          nohup PORT=$PORT npm run start &> next.log &
+          echo $! > server.pid
+          npx wait-on http://localhost:$PORT
+          
+      # Run Lighthouse CI
+      - name: Run Lighthouse CI
+        run: npx lhci autorun --upload.target=temporary-public-storage --url=http://localhost:$PORT --chrome-flags="--no-sandbox"
+
+      # Stop the server
+      - name: Stop Next.js
+        run: |
+          kill $(cat server.pid) || true
