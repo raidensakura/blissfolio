@@ -2,11 +2,11 @@ import { FaGithub } from 'react-icons/fa';
 
 export default function Footer() {
 	return (
-		<footer className="bg-[var(--background)] border-t border-purple-500/20 py-6">
+		<footer className="bg-[var(--background)] border-t py-6" style={{ borderColor: 'var(--accent-border)' }}>
 			<div className="max-w-5xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
 				{/* Left: copyright */}
 				<p className="text-gray-400 text-sm">
-					Made by Raiden, inspired by <a className="text-purple-400 hover:underline" href="https://z1.gg/">Thusuzzee</a>.
+					Made by Raiden, inspired by <a className="hover:underline" href="https://z1.gg/" style={{ color: 'var(--accent-text)' }}>Thusuzzee</a>.
 				</p>
 
 				{/* Right: social links */}

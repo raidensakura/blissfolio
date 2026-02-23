@@ -1,6 +1,6 @@
 'use client';
 
-import { Copy, ExternalLink } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import { useState } from 'react';
 import CopyButton from '../CopyButton';
 
@@ -11,16 +11,16 @@ interface DomainCardProps {
 export default function DomainCard({ domain }: DomainCardProps) {
 	const [imgError, setImgError] = useState(false);
 
-	const copyDomain = () => navigator.clipboard.writeText(domain);
-
 	const faviconUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
 
 	return (
 		<div
-			className="relative p-5 rounded-2xl border border-purple-500/20
+			className="relative p-5 rounded-2xl border
                  bg-gradient-to-br from-[#15151c] to-[#111116]
-                 hover:border-purple-500/40 hover:shadow-purple-500/10
                  transition shadow-lg"
+			style={{
+				borderColor: 'var(--accent-border)',
+			}}
 		>
 			<div className="flex flex-col sm:flex-row sm:items-center gap-3">
 				{/* Favicon */}
@@ -33,7 +33,10 @@ export default function DomainCard({ domain }: DomainCardProps) {
 							onError={() => setImgError(true)}
 						/>
 					) : (
-						<span className="text-purple-400 text-xl font-semibold">
+						<span
+							className="text-xl font-semibold"
+							style={{ color: 'var(--accent-text)' }}
+						>
 							{domain.charAt(0).toUpperCase()}
 						</span>
 					)}

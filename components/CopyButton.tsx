@@ -27,8 +27,9 @@ export default function CopyButton({ textToCopy }: { textToCopy: string }) {
 			{copied && (
 				<span
 					className="absolute -top-8 left-1/2 transform -translate-x-1/2 
-                     bg-purple-500 text-white text-xs px-2 py-1 rounded-lg
+                     text-white text-xs px-2 py-1 rounded-lg
                      shadow-lg whitespace-nowrap z-10 animate-fadeInOut"
+                     style={{ backgroundColor: 'var(--accent-text)' }}
 				>
 					Copied: {textToCopy}
 				</span>

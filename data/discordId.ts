@@ -1,1 +1,0 @@
-export const discordId = '243316261264556032';

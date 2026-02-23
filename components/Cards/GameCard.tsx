@@ -1,6 +1,5 @@
 'use client';
 
-import { Copy } from 'lucide-react';
 import CopyButton from '../CopyButton';
 
 interface Game {
@@ -16,16 +15,15 @@ interface GameCardProps {
 }
 
 export default function GameCard({ game }: GameCardProps) {
-	const copyUID = () => navigator.clipboard.writeText(game.uid);
-
 	return (
 		<div
-			className="relative p-5 rounded-2xl border border-purple-500/20
+			className="relative p-5 rounded-2xl border
                  bg-gradient-to-br from-[#15151c] to-[#111116]
-                 hover:border-purple-500/40 hover:shadow-purple-500/10
                  transition shadow-lg"
+			style={{
+				borderColor: 'var(--accent-border)',
+			}}
 		>
-			{/* Main container: stacked on mobile, row on desktop */}
 			<div className="flex flex-col sm:flex-row sm:items-center gap-3">
 				{/* Image */}
 				<img
@@ -36,27 +34,28 @@ export default function GameCard({ game }: GameCardProps) {
 
 				{/* Info section */}
 				<div className="flex flex-col flex-1 gap-2 min-w-0">
-					{/* Title */}
 					<h3 className="font-semibold text-lg truncate">{game.name}</h3>
 
-					{/* Badge line: Active + server */}
+					{/* Badge line */}
 					<div className="flex items-center gap-2 flex-wrap">
 						<span
-							className={`text-xs px-2 py-1 rounded-md flex-shrink-0 ${
-								game.active
-									? 'bg-green-600/20 text-green-400'
-									: 'bg-red-600/20 text-red-400'
-							}`}
+							className="text-xs px-2 py-1 rounded-md flex-shrink-0"
+							style={{
+								backgroundColor: game.active
+									? 'rgba(34,197,94,0.15)'
+									: 'rgba(239,68,68,0.15)',
+								color: game.active ? 'rgb(74,222,128)' : 'rgb(248,113,113)',
+							}}
 						>
 							{game.active ? 'Active' : 'Inactive'}
 						</span>
+
 						<span className="text-xs px-2 py-1 rounded-md bg-white/10 text-gray-400 flex-shrink-0">
 							{game.region}
 						</span>
 					</div>
 
-					{/* UID line */}
-					<div className="text-sm text-gray-400 truncate">{`UID: ${game.uid}`}</div>
+					<div className="text-sm text-gray-400 truncate">UID: {game.uid}</div>
 				</div>
 
 				<CopyButton textToCopy={game.uid} />

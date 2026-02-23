@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { FaSpotify, FaDesktop, FaMobile, FaChrome } from 'react-icons/fa';
-import { discordId } from '../data/discordId';
+import { profile } from '../data/profile';
+const discordID = profile.discordID;
 
 interface DiscordUser {
 	id: string;
@@ -47,7 +48,7 @@ export default function DiscordSpotifyCard() {
 		async function fetchStatus() {
 			try {
 				const res = await fetch(
-					`https://api.lanyard.rest/v1/users/${discordId}`,
+					`https://api.lanyard.rest/v1/users/${discordID}`,
 				);
 				const json = await res.json();
 				if (json.success) setData(json.data);
@@ -67,7 +68,7 @@ export default function DiscordSpotifyCard() {
 
 	if (!data) {
 		return (
-			<div className="rounded-2xl border border-purple-500/20 p-5 bg-[#111116]">
+			<div className="rounded-2xl border p-5 bg-[#111116]" style={{ color: 'var(--accent-border)' }}>
 				<p className="text-sm text-gray-400">Discord & Spotify</p>
 				<p className="mt-2 text-gray-500 italic">Loading...</p>
 			</div>
@@ -95,12 +96,15 @@ export default function DiscordSpotifyCard() {
 	};
 
 	return (
-		<div
-			className="relative p-5 rounded-2xl border border-purple-500/20 
+        <div
+            className="relative p-5 rounded-2xl border
                  bg-gradient-to-br from-[#15151c] to-[#111116]
-                 shadow-lg hover:border-purple-500/40 transition"
-		>
-			{/* Header */}
+                 shadow-lg transition"
+            style={{ borderColor: 'var(--accent-border)', '--hover-color': 'var(--accent-start)' } as React.CSSProperties}
+            onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'var(--accent-end)')}
+            onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--accent-border)')}
+        >
+            {/* Header */}
 			<div className="flex items-center justify-between">
 				<h3 className="text-sm text-gray-400 uppercase font-medium">
 					Discord & Spotify
@@ -115,10 +119,11 @@ export default function DiscordSpotifyCard() {
 				<img
 					src={`https://cdn.discordapp.com/avatars/${data.discord_user.id}/${data.discord_user.avatar}.png`}
 					alt={data.discord_user.username}
-					className="w-12 h-12 rounded-xl border-2 border-purple-500 object-cover"
+					className="w-12 h-12 rounded-xl border-2 object-cover"
+                    style={{ borderColor: 'var(--accent-border)' }}
 				/>
 				<div className="flex-1 min-w-0">
-					<p className="font-semibold text-purple-400 truncate">
+					<p className="font-semibold truncate" style={{ color: 'var(--accent-text)' }}>
 						{data.discord_user.display_name || data.discord_user.username}
 					</p>
 
@@ -168,7 +173,7 @@ export default function DiscordSpotifyCard() {
 			</div>
 			{/* Spotify Now Playing */}
 			{data.listening_to_spotify && data.spotify && (
-				<div className="mt-4 flex items-center gap-4 border-t border-purple-500/20 pt-3">
+				<div className="mt-4 flex items-center gap-4 border-t pt-3" style={{ borderColor: 'var(--accent-border)' }}>
 					{/* Album art */}
 					{data.spotify.album_art_url && (
 						<img

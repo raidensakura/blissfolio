@@ -3,32 +3,22 @@
 /* Base colors */
 :root {
     --background: #111116;
-    /* dark page background */
     --foreground: #111116;
-
-    --accent-start: #a855f7;
-    --accent-end: #8b5cf6;
-    --accent-text: #ec4899;
-    --accent-border: #db2777;
 }
 
-/* Dark mode overrides using class strategy (preferred for toggle) */
+/* Dark mode overrides */
 .dark {
     --background: #0a0a0a;
     --foreground: #ededed;
-
-    --accent-start: #a855f7;
-    --accent-end: #8b5cf6;
-    --accent-text: #ec4899;
-    --accent-border: #db2777;
 }
 
-/* Apply variables to Tailwind theme-like CSS */
+/* Apply variables */
 body {
     background-color: var(--background);
     color: var(--foreground);
 }
 
+/* Components */
 .card-tag {
     @apply flex items-center gap-2 px-3 py-2 rounded-lg border;
     background-color: rgba(255, 255, 255, 0.05);
@@ -38,19 +28,19 @@ body {
 .btn-primary {
     @apply w-full flex items-center justify-center gap-2 py-3 rounded-xl transition;
     background: linear-gradient(to right, var(--accent-start), var(--accent-end));
+}
 
-    &:hover {
-        opacity: 0.9;
-    }
+.btn-primary:hover {
+    opacity: 0.9;
 }
 
 .btn-secondary {
     @apply w-full flex items-center justify-center gap-2 py-3 rounded-xl border transition;
     border-color: rgba(255, 255, 255, 0.1);
+}
 
-    &:hover {
-        background-color: rgba(255, 255, 255, 0.05);
-    }
+.btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.05);
 }
 
 .project-card,

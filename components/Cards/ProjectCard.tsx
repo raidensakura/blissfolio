@@ -7,7 +7,7 @@ interface ProjectCardProps {
 	title: string;
 	description: string;
 	url: string;
-	icon?: string | ReactNode; // optional internal icon
+	icon?: string | ReactNode;
 }
 
 export default function ProjectCard({
@@ -20,12 +20,11 @@ export default function ProjectCard({
 
 	return (
 		<div
-			className="flex flex-col p-5 rounded-2xl border border-purple-500/20
+			className="flex flex-col p-5 rounded-2xl border
                bg-gradient-to-br from-[#15151c] to-[#111116]
-               hover:border-purple-500/40 hover:shadow-purple-500/10
                transition shadow-lg h-full"
+			style={{ borderColor: 'var(--accent-border)' }}
 		>
-			{/* Top Row (icon + title) */}
 			<div className="flex gap-4 min-w-0">
 				<div className="w-14 h-14 rounded-xl bg-white/5 flex items-center justify-center flex-shrink-0 overflow-hidden">
 					{icon ? (
@@ -40,25 +39,29 @@ export default function ProjectCard({
 							icon
 						)
 					) : (
-						<span className="text-purple-400 text-xl font-semibold">
+						<span
+							className="text-xl font-semibold"
+							style={{ color: 'var(--accent-text)' }}
+						>
 							{title.charAt(0).toUpperCase()}
 						</span>
 					)}
 				</div>
 
 				<div className="flex flex-col min-w-0">
-                    <div className="flex items-center h-14">
-                        <h3 className="font-semibold text-lg text-purple-400 truncate">
-                            {title}
-                        </h3>
-                    </div>
+					<div className="flex items-center h-14">
+						<h3
+							className="font-semibold text-lg truncate"
+							style={{ color: 'var(--accent-text)' }}
+						>
+							{title}
+						</h3>
+					</div>
 				</div>
 			</div>
 
-			{/* Description */}
 			<p className="text-sm text-gray-400 mt-3">{description}</p>
 
-			{/* Button pinned to bottom */}
 			<div className="mt-auto pt-4">
 				<a
 					href={url}

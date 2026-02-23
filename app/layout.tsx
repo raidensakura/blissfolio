@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import Footer from '../components/Footer';
 import './globals.css';
+import { siteMetadata } from '../data/site';
+import { theme } from '../data/theme';
 
 const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] });
 const geistMono = Geist_Mono({
@@ -9,10 +11,7 @@ const geistMono = Geist_Mono({
 	subsets: ['latin'],
 });
 
-export const metadata: Metadata = {
-	title: 'Raiden Sakura',
-	description: 'My personal website built with Next.js.',
-};
+export const metadata = siteMetadata;
 
 export default function RootLayout({
 	children,
@@ -22,6 +21,14 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body
+				style={
+					{
+						'--accent-start': theme.accentStart,
+						'--accent-end': theme.accentEnd,
+						'--accent-text': theme.accentText,
+						'--accent-border': theme.accentBorder,
+					} as React.CSSProperties
+				}
 				className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen bg-[var(--background)] text-[var(--foreground)] transition-colors`}
 			>
 				<main className="flex-1 bg-[var(--background)]">{children}</main>

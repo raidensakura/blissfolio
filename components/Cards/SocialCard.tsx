@@ -1,8 +1,7 @@
 'use client';
 
-import { Copy, ExternalLink } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import CopyButton from '../CopyButton';
-
 
 interface Social {
 	name: string;
@@ -16,24 +15,20 @@ interface SocialCardProps {
 }
 
 export default function SocialCard({ social }: SocialCardProps) {
-	const copyUsername = () => navigator.clipboard.writeText(social.value);
 	const Icon = social.icon;
 
 	return (
 		<div
-			className="relative p-5 rounded-2xl border border-purple-500/20
+			className="relative p-5 rounded-2xl border
                  bg-gradient-to-br from-[#15151c] to-[#111116]
-                 hover:border-purple-500/40 hover:shadow-purple-500/10
                  transition shadow-lg"
+			style={{ borderColor: 'var(--accent-border)' }}
 		>
 			<div className="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center gap-4">
-				{/* LEFT SIDE: icon + text */}
 				<div className="flex gap-4 flex-1 min-w-0 items-center">
 					<div
-						className="w-14 h-14 rounded-xl 
-                       bg-white/5 flex items-center justify-center
-                       text-purple-400 text-xl group-hover:text-purple-300
-                       transition flex-shrink-0"
+						className="w-14 h-14 rounded-xl bg-white/5 flex items-center justify-center text-xl transition flex-shrink-0"
+						style={{ color: 'var(--accent-text)' }}
 					>
 						<Icon size={28} />
 					</div>
@@ -44,12 +39,12 @@ export default function SocialCard({ social }: SocialCardProps) {
 					</div>
 				</div>
 
-				{/* RIGHT SIDE: buttons */}
 				<div className="flex gap-2 flex-shrink-0">
 					<CopyButton textToCopy={social.url} />
 					<a
 						href={social.url}
 						target="_blank"
+						rel="noopener noreferrer"
 						className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition"
 					>
 						<ExternalLink size={18} />
