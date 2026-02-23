@@ -9,9 +9,7 @@ export default function GitHubContributions({
 }) {
     return (
         <ThemedCard className="flex flex-col">
-            <h2 className="text-xl font-semibold mb-4">
-                GitHub Contributions
-            </h2>
+            <h2 className="text-xl font-semibold mb-4">GitHub Contributions</h2>
 
             {/* Scrollable wrapper */}
             <div className="overflow-x-auto rounded-lg">
