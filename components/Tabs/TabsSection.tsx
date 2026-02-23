@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Tab from './Tab';
 import SocialCard from '../Cards/SocialCard';
 import GameCard from '../Cards/GameCard';
@@ -36,6 +36,21 @@ export default function TabsSection({
         'socials' | 'games' | 'domains' | 'pc'
     >('socials');
 
+    const tabRefs = useRef<HTMLButtonElement[]>([]);
+    const [underlineStyle, setUnderlineStyle] = useState({ width: 0, left: 0 });
+
+    useEffect(() => {
+        const currentTab = tabRefs.current.find(
+            (_, i) => ['socials', 'games', 'domains', 'pc'][i] === activeTab,
+        );
+        if (currentTab) {
+            setUnderlineStyle({
+                width: currentTab.offsetWidth,
+                left: currentTab.offsetLeft,
+            });
+        }
+    }, [activeTab]);
+
     return (
         <div
             className="rounded-2xl border p-6 bg-[#111116]"
@@ -45,47 +60,54 @@ export default function TabsSection({
                     '--hover-color': 'var(--accent-start)',
                 } as React.CSSProperties
             }
-            onMouseEnter={(e) =>
-                (e.currentTarget.style.borderColor = 'var(--accent-end)')
-            }
-            onMouseLeave={(e) =>
-                (e.currentTarget.style.borderColor = 'var(--accent-border)')
-            }
         >
-            <div className="flex flex-wrap gap-6 border-b border-white/10 pb-4 mb-6">
-                <Tab
-                    label="Socials"
-                    count={socials.length}
-                    active={activeTab === 'socials'}
-                    onClick={() => setActiveTab('socials')}
-                    theme={theme}
-                />
+            {/* Scrollable tabs */}
+            <div className="overflow-x-auto relative">
+                <div className="flex gap-6 min-w-max relative border-b border-white/10 pb-4 mb-6">
+                    {[
+                        {
+                            label: 'Socials',
+                            key: 'socials',
+                            count: socials.length,
+                        },
+                        {
+                            label: 'Game UIDs',
+                            key: 'games',
+                            count: games.length,
+                        },
+                        {
+                            label: 'My Domains',
+                            key: 'domains',
+                            count: domains.length,
+                        },
+                        { label: 'PC Specs', key: 'pc', count: pcSpecs.length },
+                    ].map((tab, i) => (
+                        <Tab
+                            key={tab.key}
+                            label={tab.label}
+                            count={tab.count}
+                            active={activeTab === tab.key}
+                            onClick={() => setActiveTab(tab.key as any)}
+                            theme={theme}
+                            ref={(el: HTMLButtonElement) =>
+                                (tabRefs.current[i] = el)
+                            }
+                        />
+                    ))}
 
-                <Tab
-                    label="Game UIDs"
-                    count={games.length}
-                    active={activeTab === 'games'}
-                    onClick={() => setActiveTab('games')}
-                    theme={theme}
-                />
-
-                <Tab
-                    label="My Domains"
-                    count={domains.length}
-                    active={activeTab === 'domains'}
-                    onClick={() => setActiveTab('domains')}
-                    theme={theme}
-                />
-
-                <Tab
-                    label="PC Specs"
-                    count={pcSpecs.length}
-                    active={activeTab === 'pc'}
-                    onClick={() => setActiveTab('pc')}
-                    theme={theme}
-                />
+                    {/* Animated underline */}
+                    <span
+                        className="absolute bottom-0 h-[2px] rounded-full transition-all duration-300"
+                        style={{
+                            width: underlineStyle.width,
+                            left: underlineStyle.left,
+                            backgroundColor: theme.accentBorder,
+                        }}
+                    />
+                </div>
             </div>
 
+            {/* Tab content */}
             <div className="animate-fadeIn">
                 {activeTab === 'socials' && (
                     <div className="grid md:grid-cols-2 gap-6">
