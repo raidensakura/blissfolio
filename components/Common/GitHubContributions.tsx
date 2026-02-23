@@ -9,7 +9,7 @@ export default function GitHubContributions({
 }) {
     return (
         <ThemedCard className="flex flex-col">
-            <h2 className="text-xl font-semibold mb-4 text-[var(--accent-text)]">
+            <h2 className="text-xl font-semibold mb-4">
                 GitHub Contributions
             </h2>
 
