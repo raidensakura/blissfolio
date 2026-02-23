@@ -1,14 +1,9 @@
 'use client';
 
-import Image from 'next/image';
-import { Mail, Calendar, User, MapPin } from 'lucide-react';
-import { FaDiscord } from 'react-icons/fa';
-
 import TabsSection from '../components/Tabs/TabsSection';
 import ProfileCard from '@/components/Cards/ProfileCard';
 import ProjectCard from '../components/Cards/ProjectCard';
 import GitHubCard from '@/components/Cards/GitHubCard';
-import Tag from '../components/Common/Tag';
 import DiscordStatus from '../components/DiscordStatus';
 import GitHubContributions from '../components/Common/GitHubContributions';
 

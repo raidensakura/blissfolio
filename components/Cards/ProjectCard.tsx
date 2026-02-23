@@ -3,6 +3,7 @@
 import { ExternalLink } from 'lucide-react';
 import { useState, ReactNode } from 'react';
 import { ThemedCard } from './BaseCard';
+import Image from 'next/image';
 
 interface ProjectCardProps {
     title: string;
@@ -17,17 +18,20 @@ export default function ProjectCard({
     url,
     icon,
 }: ProjectCardProps) {
-    const [imgError, setImgError] = useState(false); // eslint-disable-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [imgError, setImgError] = useState(false);
 
     return (
-        <ThemedCard>
+        <ThemedCard className="flex flex-col h-full">
             <div className="flex gap-4 min-w-0">
                 <div className="w-14 h-14 rounded-xl bg-white/5 flex items-center justify-center flex-shrink-0 overflow-hidden">
                     {icon ? (
                         typeof icon === 'string' ? (
-                            <img // eslint-disable-line @next/next/no-img-element
+                            <Image
                                 src={icon}
                                 alt={`${title} icon`}
+                                height={32}
+                                width={32}
                                 className="w-8 h-8 object-contain"
                                 onError={() => setImgError(true)}
                             />
@@ -44,19 +48,17 @@ export default function ProjectCard({
                     )}
                 </div>
 
-                <div className="flex flex-col min-w-0">
-                    <div className="flex items-center h-14">
-                        <h3
-                            className="font-semibold text-lg truncate"
-                            style={{ color: 'var(--accent-text)' }}
-                        >
-                            {title}
-                        </h3>
-                    </div>
+                <div className="flex flex-col min-w-0 justify-center">
+                    <h3
+                        className="font-semibold text-lg truncate"
+                        style={{ color: 'var(--accent-text)' }}
+                    >
+                        {title}
+                    </h3>
                 </div>
             </div>
 
-            <p className="text-sm text-gray-400 mt-3">{description}</p>
+            <p className="text-sm text-gray-400 mt-3 flex-1">{description}</p>
 
             <div className="mt-auto pt-4">
                 <a
