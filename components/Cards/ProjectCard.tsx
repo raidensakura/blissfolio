@@ -16,7 +16,7 @@ export default function ProjectCard({
 	url,
 	icon,
 }: ProjectCardProps) {
-	const [imgError, setImgError] = useState(false);
+	const [imgError, setImgError] = useState(false); // eslint-disable-line @typescript-eslint/no-unused-vars
 
 	return (
 		<div
@@ -29,7 +29,7 @@ export default function ProjectCard({
 				<div className="w-14 h-14 rounded-xl bg-white/5 flex items-center justify-center flex-shrink-0 overflow-hidden">
 					{icon ? (
 						typeof icon === 'string' ? (
-							<img
+							<img // eslint-disable-line @next/next/no-img-element
 								src={icon}
 								alt={`${title} icon`}
 								className="w-8 h-8 object-contain"

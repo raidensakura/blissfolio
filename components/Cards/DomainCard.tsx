@@ -26,7 +26,7 @@ export default function DomainCard({ domain }: DomainCardProps) {
 				{/* Favicon */}
 				<div className="w-14 h-14 rounded-xl bg-white/5 flex items-center justify-center flex-shrink-0 overflow-hidden">
 					{!imgError ? (
-						<img
+						<img // eslint-disable-line @next/next/no-img-element
 							src={faviconUrl}
 							alt={`${domain} favicon`}
 							className="w-8 h-8 object-contain"

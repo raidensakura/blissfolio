@@ -1,5 +1,5 @@
 import { FaGithub, FaYoutube, FaSteam, FaSpotify, FaDiscord } from 'react-icons/fa';
-import { SiAnilist, SiMyanimelist } from 'react-icons/si';
+import { SiMyanimelist } from 'react-icons/si';
 
 export const socials = [
   { name: 'GitHub', value: 'Raiden', url: 'https://github.com/raidensakura', icon: FaGithub },

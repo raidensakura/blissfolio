@@ -26,7 +26,7 @@ export default function GameCard({ game }: GameCardProps) {
 		>
 			<div className="flex flex-col sm:flex-row sm:items-center gap-3">
 				{/* Image */}
-				<img
+				<img // eslint-disable-line @next/next/no-img-element
 					src={game.image}
 					alt={game.name}
 					className="w-14 h-14 rounded-xl object-cover flex-shrink-0"

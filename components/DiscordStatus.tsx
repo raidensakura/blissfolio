@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { FaSpotify, FaDesktop, FaMobile, FaChrome } from 'react-icons/fa';
 import { profile } from '../data/profile';
 const discordID = profile.discordID;
@@ -19,7 +20,7 @@ interface DiscordActivity {
 	details?: string;
 	timestamps?: { start: number; end?: number };
 	assets?: { large_image?: string; small_image?: string; large_text?: string };
-    application_id?: string;
+	application_id?: string;
 }
 
 interface SpotifyData {
@@ -42,7 +43,7 @@ interface DiscordData {
 
 export default function DiscordSpotifyCard() {
 	const [data, setData] = useState<DiscordData | null>(null);
-	const [now, setNow] = useState(Date.now());
+	const [now, setNow] = useState(() => Date.now());
 
 	useEffect(() => {
 		async function fetchStatus() {
@@ -59,7 +60,7 @@ export default function DiscordSpotifyCard() {
 
 		fetchStatus();
 		const interval = setInterval(fetchStatus, 15000); // refresh every 15s
-		const timer = setInterval(() => setNow(Date.now()), 1000); // live timer update
+		const timer = setInterval(() => setNow(Date.now()), 1000); // live timer
 		return () => {
 			clearInterval(interval);
 			clearInterval(timer);
@@ -68,7 +69,10 @@ export default function DiscordSpotifyCard() {
 
 	if (!data) {
 		return (
-			<div className="rounded-2xl border p-5 bg-[#111116]" style={{ color: 'var(--accent-border)' }}>
+			<div
+				className="rounded-2xl border p-5 bg-[#111116]"
+				style={{ color: 'var(--accent-border)' }}
+			>
 				<p className="text-sm text-gray-400">Discord & Spotify</p>
 				<p className="mt-2 text-gray-500 italic">Loading...</p>
 			</div>
@@ -90,21 +94,28 @@ export default function DiscordSpotifyCard() {
 		const hrs = Math.floor(elapsed / 3600);
 		const mins = Math.floor((elapsed % 3600) / 60);
 		const secs = elapsed % 60;
-		return `${hrs > 0 ? `${hrs}:` : ''}${hrs > 0 ? String(mins).padStart(2, '0') : mins}:${String(
-			secs,
-		).padStart(2, '0')}`;
+		return `${hrs > 0 ? `${hrs}:` : ''}${
+			hrs > 0 ? String(mins).padStart(2, '0') : mins
+		}:${String(secs).padStart(2, '0')}`;
 	};
 
 	return (
-        <div
-            className="relative p-5 rounded-2xl border
-                 bg-gradient-to-br from-[#15151c] to-[#111116]
-                 shadow-lg transition"
-            style={{ borderColor: 'var(--accent-border)', '--hover-color': 'var(--accent-start)' } as React.CSSProperties}
-            onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'var(--accent-end)')}
-            onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--accent-border)')}
-        >
-            {/* Header */}
+		<div
+			className="relative p-5 rounded-2xl border bg-gradient-to-br from-[#15151c] to-[#111116] shadow-lg transition"
+			style={
+				{
+					borderColor: 'var(--accent-border)',
+					'--hover-color': 'var(--accent-start)',
+				} as React.CSSProperties
+			}
+			onMouseEnter={(e) =>
+				(e.currentTarget.style.borderColor = 'var(--accent-end)')
+			}
+			onMouseLeave={(e) =>
+				(e.currentTarget.style.borderColor = 'var(--accent-border)')
+			}
+		>
+			{/* Header */}
 			<div className="flex items-center justify-between">
 				<h3 className="text-sm text-gray-400 uppercase font-medium">
 					Discord & Spotify
@@ -114,16 +125,23 @@ export default function DiscordSpotifyCard() {
 					title={data.discord_status}
 				/>
 			</div>
+
 			{/* Discord User Info */}
 			<div className="flex items-center gap-4 mt-3">
-				<img
+				<img // eslint-disable-line @next/next/no-img-element
 					src={`https://cdn.discordapp.com/avatars/${data.discord_user.id}/${data.discord_user.avatar}.png`}
 					alt={data.discord_user.username}
-					className="w-12 h-12 rounded-xl border-2 object-cover"
-                    style={{ borderColor: 'var(--accent-border)' }}
+					width={48}
+					height={48}
+					className="rounded-xl border-2 object-cover"
+					style={{ borderColor: 'var(--accent-border)' }}
 				/>
+
 				<div className="flex-1 min-w-0">
-					<p className="font-semibold truncate" style={{ color: 'var(--accent-text)' }}>
+					<p
+						className="font-semibold truncate"
+						style={{ color: 'var(--accent-text)' }}
+					>
 						{data.discord_user.display_name || data.discord_user.username}
 					</p>
 
@@ -134,17 +152,21 @@ export default function DiscordSpotifyCard() {
 						</p>
 					)}
 
-					{/* Game/Playing Activity with Icon & Timer */}
+					{/* Game/Playing Activity */}
 					{gameActivity && (
 						<div className="flex items-center gap-2 text-gray-400 text-sm mt-1">
 							{/* Game Icon */}
-							{gameActivity.assets?.large_image && (
-								<img
-									src={`https://cdn.discordapp.com/app-assets/${gameActivity.application_id}/${gameActivity.assets.large_image}.png`}
-									alt={gameActivity.name}
-									className="w-5 h-5 rounded-sm"
-								/>
-							)}
+							{gameActivity.assets?.large_image &&
+								gameActivity.application_id && (
+									<Image
+										src={`https://cdn.discordapp.com/app-assets/${gameActivity.application_id}/${gameActivity.assets.large_image}.png`}
+										alt={gameActivity.name}
+										width={20}
+										height={20}
+										className="rounded-sm"
+									/>
+								)}
+
 							{/* Name + Timer */}
 							<span className="truncate">
 								{gameActivity.details ||
@@ -165,21 +187,28 @@ export default function DiscordSpotifyCard() {
 					)}
 				</div>
 			</div>
+
 			{/* Platform Badges */}
 			<div className="flex gap-2 mt-3 text-gray-400">
 				{data.active_on_discord_desktop && <FaDesktop title="Desktop" />}
 				{data.active_on_discord_mobile && <FaMobile title="Mobile" />}
 				{data.active_on_discord_web && <FaChrome title="Web" />}
 			</div>
+
 			{/* Spotify Now Playing */}
 			{data.listening_to_spotify && data.spotify && (
-				<div className="mt-4 flex items-center gap-4 border-t pt-3" style={{ borderColor: 'var(--accent-border)' }}>
+				<div
+					className="mt-4 flex items-center gap-4 border-t pt-3"
+					style={{ borderColor: 'var(--accent-border)' }}
+				>
 					{/* Album art */}
 					{data.spotify.album_art_url && (
-						<img
+						<Image
 							src={data.spotify.album_art_url}
 							alt={data.spotify.song}
-							className="w-16 h-16 rounded-xl border-2 border-green-400 object-cover"
+							width={64}
+							height={64}
+							className="rounded-xl border-2 border-green-400 object-cover"
 						/>
 					)}
 

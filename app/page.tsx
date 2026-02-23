@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { Mail, Calendar, User, MapPin } from 'lucide-react';
 import { FaDiscord } from 'react-icons/fa';
 
@@ -46,17 +47,24 @@ export default function Home() {
 								opacity: 0.8,
 							}}
 						>
-							<img
+							<Image
 								src="/banner.jpg"
-								className="w-full h-full object-cover opacity-70"
+								alt="Banner"
+								fill
+								className="object-cover opacity-70"
+								priority
 							/>
 						</div>
 
 						{/* Avatar */}
 						<div className="px-6 -mt-12">
-							<img
+							<Image
 								src="/avatar.png"
-								className="w-24 h-24 rounded-xl border-4 shadow-lg z-10 relative"
+								alt="Profile avatar"
+								width={96}
+								height={96}
+								priority
+								className="rounded-xl border-4 shadow-lg z-10 relative"
 								style={{ borderColor: 'var(--accent-border)' }}
 							/>
 						</div>
@@ -67,18 +75,22 @@ export default function Home() {
 								className="text-2xl font-semibold"
 								style={{ color: 'var(--accent-text)' }}
 							>
-								{' '}
 								{profile.name}
 							</h1>
+
 							<p className="text-gray-400">{profile.description}</p>
 							<p>{profile.love}</p>
 
 							<div className="grid grid-cols-2 gap-3 text-sm">
 								<Tag icon={<User size={16} />} label="he/him" />
+
 								<Tag
 									icon={<Calendar size={16} />}
-									label={`${new Date().getFullYear() - profile.birthYear} years old`}
+									label={`${
+										new Date().getFullYear() - profile.birthYear
+									} years old`}
 								/>
+
 								<div className="col-span-2">
 									<Tag icon={<MapPin size={16} />} label={profile.location} />
 								</div>

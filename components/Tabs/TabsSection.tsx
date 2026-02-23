@@ -7,6 +7,19 @@ import GameCard from '../Cards/GameCard';
 import DomainCard from '../Cards/DomainCard';
 import SpecGrid from '../Grids/SpecGrid';
 
+interface TabsSectionProps {
+    socials: any[];
+    games: any[];
+    domains: any[];
+    pcSpecs: any[];
+    theme?: {
+        accentStart?: string;
+        accentEnd?: string;
+        accentText?: string;
+        accentBorder?: string;
+    };
+}
+
 export default function TabsSection({
 	socials,
 	games,
@@ -18,7 +31,7 @@ export default function TabsSection({
 		accentText: 'var(--accent-text)',
 		accentBorder: 'var(--accent-border)',
 	},
-}: any) {
+}: TabsSectionProps) {
 	const [activeTab, setActiveTab] = useState<
 		'socials' | 'games' | 'domains' | 'pc'
 	>('socials');
