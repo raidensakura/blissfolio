@@ -89,9 +89,11 @@ export default function TabsSection({
                             active={activeTab === tab.key}
                             onClick={() => setActiveTab(tab.key as any)}
                             theme={theme}
-                            ref={(el: HTMLButtonElement) =>
-                                (tabRefs.current[i] = el)
-                            }
+                            ref={(el: HTMLButtonElement | null) => {
+                                if (el) {
+                                    tabRefs.current[i] = el; // store the ref
+                                }
+                            }}
                         />
                     ))}
 
