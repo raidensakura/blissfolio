@@ -18,7 +18,9 @@ export default function GitHubContributions({
                     src={`https://ghchart.rshah.org/${username}`}
                     alt="GitHub Contributions"
                     className="
-            w-[600px] sm:w-full
+            sm:max-w-[700px]
+            md:max-w-[900px]
+            sm:w-full
             max-w-none
             max-h-64
             block
