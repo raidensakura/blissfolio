@@ -51,24 +51,62 @@ export default function DiscordSpotifyCard() {
     const [now, setNow] = useState(() => Date.now());
 
     useEffect(() => {
-        async function fetchStatus() {
-            try {
-                const res = await fetch(
-                    `https://api.lanyard.rest/v1/users/${discordID}`,
+        let ws: WebSocket | null = null;
+        let heartbeat: NodeJS.Timeout;
+
+        function connect() {
+            ws = new WebSocket('wss://api.lanyard.rest/socket');
+
+            ws.onopen = () => {
+                console.log('Connected to Lanyard WS');
+
+                // Subscribe to your user
+                ws?.send(
+                    JSON.stringify({
+                        op: 2,
+                        d: {
+                            subscribe_to_id: discordID,
+                        },
+                    }),
                 );
-                const json = await res.json();
-                if (json.success) setData(json.data);
-            } catch (err) {
-                console.error('Failed to fetch Discord status', err);
-            }
+            };
+
+            ws.onmessage = (event) => {
+                const msg = JSON.parse(event.data);
+
+                switch (msg.op) {
+                    case 1:
+                        // Hello → start heartbeat
+                        heartbeat = setInterval(() => {
+                            ws?.send(JSON.stringify({ op: 3 }));
+                        }, msg.d.heartbeat_interval);
+                        break;
+
+                    case 0:
+                        // Presence update
+                        setData(msg.d);
+                        break;
+                }
+            };
+
+            ws.onclose = () => {
+                console.log('Lanyard WS closed, reconnecting...');
+                setTimeout(connect, 5000);
+            };
+
+            ws.onerror = () => {
+                ws?.close();
+            };
         }
 
-        fetchStatus();
-        const interval = setInterval(fetchStatus, 15000); // refresh every 15s
-        const timer = setInterval(() => setNow(Date.now()), 1000); // live timer
+        connect();
+
+        const timer = setInterval(() => setNow(Date.now()), 1000);
+
         return () => {
-            clearInterval(interval);
+            ws?.close();
             clearInterval(timer);
+            clearInterval(heartbeat);
         };
     }, []);
 
@@ -154,7 +192,7 @@ export default function DiscordSpotifyCard() {
                             {/* Game Icon */}
                             {gameActivity.assets?.large_image &&
                                 gameActivity.application_id && (
-                                    <Image
+                                    <img
                                         src={`https://cdn.discordapp.com/app-assets/${gameActivity.application_id}/${gameActivity.assets.large_image}.png`}
                                         alt={gameActivity.name}
                                         width={20}
