@@ -157,7 +157,7 @@ export default function DiscordSpotifyCard() {
 
             {/* Discord User Info */}
             <div className="flex items-center gap-4 mt-3">
-                <img // eslint-disable-line @next/next/no-img-element
+                <Image // eslint-disable-line @next/next/no-img-element
                     src={`https://cdn.discordapp.com/avatars/${data.discord_user.id}/${data.discord_user.avatar}.png`}
                     alt={data.discord_user.username}
                     width={48}
@@ -192,12 +192,12 @@ export default function DiscordSpotifyCard() {
                             {/* Game Icon */}
                             {gameActivity.assets?.large_image &&
                                 gameActivity.application_id && (
-                                    <img
+                                    <Image
                                         src={`https://cdn.discordapp.com/app-assets/${gameActivity.application_id}/${gameActivity.assets.large_image}.png`}
                                         alt={gameActivity.name}
                                         width={20}
                                         height={20}
-                                        className="rounded-sm"
+                                        className="rounded-sm shimmer"
                                     />
                                 )}
 
@@ -254,7 +254,7 @@ export default function DiscordSpotifyCard() {
                             alt={data.spotify.song}
                             width={64}
                             height={64}
-                            className="rounded-xl border-2 border-green-400 object-cover"
+                            className="rounded-xl border-2 border-green-400 object-cover shimmer"
                         />
                     )}
 

@@ -32,7 +32,7 @@ export default function ProjectCard({
                                 alt={`${title} icon`}
                                 height={32}
                                 width={32}
-                                className="w-8 h-8 object-contain"
+                                className="w-8 h-8 object-contain shimmer"
                                 onError={() => setImgError(true)}
                             />
                         ) : (

@@ -37,7 +37,7 @@ export default function ProfileCard() {
                     alt="Banner"
                     fill
                     sizes="(max-width: 768px) 100vw, 700px"
-                    className="object-cover opacity-70"
+                    className="object-cover opacity-70 shimmer"
                     priority
                 />
             </div>
@@ -50,7 +50,7 @@ export default function ProfileCard() {
                     width={96}
                     height={96}
                     priority
-                    className="rounded-xl border-4 shadow-lg z-10 relative"
+                    className="rounded-xl border-4 shadow-lg z-10 relative shimmer"
                     style={
                         {
                             borderColor: 'var(--accent-border)',

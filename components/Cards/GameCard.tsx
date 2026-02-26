@@ -23,7 +23,7 @@ export default function GameCard({ game }: GameCardProps) {
                 <img // eslint-disable-line @next/next/no-img-element
                     src={game.image}
                     alt={game.name}
-                    className="w-14 h-14 rounded-xl object-cover flex-shrink-0"
+                    className="w-14 h-14 rounded-xl object-cover flex-shrink-0 shimmer"
                 />
 
                 {/* Info section */}
