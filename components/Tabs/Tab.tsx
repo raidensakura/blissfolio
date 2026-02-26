@@ -17,7 +17,7 @@ interface TabProps {
 
 // Forward ref to the button
 const Tab = forwardRef<HTMLButtonElement, TabProps>(
-    ({ label, active, onClick, count, theme }, ref) => {
+    ({ label, active, onClick, count }, ref) => {
         return (
             <button
                 ref={ref}

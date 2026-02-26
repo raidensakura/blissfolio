@@ -157,7 +157,7 @@ export default function DiscordSpotifyCard() {
 
             {/* Discord User Info */}
             <div className="flex items-center gap-4 mt-3">
-                <Image // eslint-disable-line @next/next/no-img-element
+                <Image
                     src={`https://cdn.discordapp.com/avatars/${data.discord_user.id}/${data.discord_user.avatar}.png`}
                     alt={data.discord_user.username}
                     width={48}
