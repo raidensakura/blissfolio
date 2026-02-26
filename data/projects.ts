@@ -2,7 +2,7 @@ export interface Project {
     title: string;
     description: string;
     url: string;
-    icon?: string; // add this
+    icon?: string;
 }
 
 export const projects: Project[] = [

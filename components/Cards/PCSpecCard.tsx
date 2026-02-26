@@ -19,9 +19,9 @@ export default function PCSpecCard({
 }: PCSpecCardProps) {
     return (
         <ThemedCard>
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3">
                 {/* Left content */}
-                <div className="flex flex-col gap-1 min-w-0">
+                <div className="flex flex-col flex-1 gap-1 min-w-0">
                     <span
                         className="inline-block text-xs font-semibold px-2 py-1 rounded-md w-max"
                         style={{
@@ -33,16 +33,18 @@ export default function PCSpecCard({
                         {name}
                     </span>
 
-                    <h3 className="font-semibold text-lg truncate">{value}</h3>
+                    <h3 className="font-semibold text-lg line-clamp-2 sm:line-clamp-1">
+                        {value}
+                    </h3>
 
                     {details && (
                         <p className="text-gray-400 text-sm">{details}</p>
                     )}
                 </div>
 
-                {/* Right buttons */}
+                {/* Actions */}
                 {url && (
-                    <div className="flex gap-2 ml-4 flex-shrink-0">
+                    <div className="flex gap-2 flex-shrink-0 self-start sm:self-center">
                         <CopyButton textToCopy={url} />
                         <a
                             href={url}
