@@ -35,7 +35,7 @@ export const socials = [
     {
         name: 'Spotify',
         value: 'Raiden',
-        url: 'https://open.spotify.com/user/1ar2lpk0vrl5ap8yitcdcwshn?si=6b8c700ddea445cf',
+        url: 'https://open.spotify.com/user/1ar2lpk0vrl5ap8yitcdcwshn',
         icon: FaSpotify,
     },
     { name: 'Discord', value: 'raiden_sakura', url: '#', icon: FaDiscord },
