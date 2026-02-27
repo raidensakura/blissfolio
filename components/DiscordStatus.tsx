@@ -102,7 +102,6 @@ export default function DiscordSpotifyCard() {
                 };
 
                 ws.onclose = () => {
-                    console.warn('Lanyard WS closed. Reconnecting in 5s...');
                     setConnected(false);
                     reconnectTimer = setTimeout(connect, 5000);
                 };
@@ -112,7 +111,7 @@ export default function DiscordSpotifyCard() {
                     ws?.close();
                 };
             } catch (err) {
-                console.error('Failed to connect WS:', err);
+                console.error('Failed to connect to Lanyard WS:', err);
                 reconnectTimer = setTimeout(connect, 5000);
             }
         }
