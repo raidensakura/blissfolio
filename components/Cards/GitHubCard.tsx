@@ -5,21 +5,21 @@ import { FaStar, FaBook, FaUser, FaCodeBranch } from 'react-icons/fa';
 import { ThemedCard } from './BaseCard';
 
 interface GitHubStats {
-    public_repos: number;
-    followers: number;
-    following: number;
+    public_repos?: number;
+    followers?: number;
+    following?: number;
 }
 
 interface GitHubEvent {
     id: string;
     type: string;
-    repo: { name: string };
-    created_at: string;
-    payload: any;
+    repo?: { name: string };
+    created_at?: string;
+    payload?: any;
 }
 
 interface GitHubData {
-    stats: GitHubStats | null;
+    stats: GitHubStats;
     events: GitHubEvent[];
 }
 
@@ -28,10 +28,7 @@ interface GitHubCardProps {
 }
 
 export default function GitHubCard({ username }: GitHubCardProps) {
-    const [data, setData] = useState<GitHubData>({
-        stats: null,
-        events: [],
-    });
+    const [data, setData] = useState<GitHubData>({ stats: {}, events: [] });
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -41,20 +38,27 @@ export default function GitHubCard({ username }: GitHubCardProps) {
                 const statsRes = await fetch(
                     `https://api.github.com/users/${username}`,
                 );
-                const statsJson: GitHubStats = await statsRes.json();
+                const statsJson: GitHubStats = statsRes.ok
+                    ? await statsRes.json()
+                    : {};
 
                 // Events
                 const eventsRes = await fetch(
                     `https://api.github.com/users/${username}/events/public`,
                 );
-                const eventsJson: GitHubEvent[] = await eventsRes.json();
+                const eventsJson: GitHubEvent[] = eventsRes.ok
+                    ? await eventsRes.json()
+                    : [];
 
                 setData({
-                    stats: statsJson,
-                    events: eventsJson.slice(0, 5), // show 5 recent events
+                    stats: statsJson || {},
+                    events: Array.isArray(eventsJson)
+                        ? eventsJson.slice(0, 5)
+                        : [],
                 });
             } catch (err) {
                 console.error('Failed to fetch GitHub data', err);
+                setData({ stats: {}, events: [] });
             } finally {
                 setLoading(false);
             }
@@ -63,26 +67,12 @@ export default function GitHubCard({ username }: GitHubCardProps) {
         fetchGitHub();
     }, [username]);
 
-    if (loading || !data.stats) {
-        return (
-            <div
-                className="p-5 rounded-2xl border bg-[#111116]"
-                style={
-                    {
-                        borderColor: 'var(--accent-border)',
-                    } as React.CSSProperties
-                }
-            >
-                <p className="text-sm text-gray-400">GitHub Stats & Activity</p>
-                <p className="mt-2 text-gray-500 italic">Loading...</p>
-            </div>
-        );
-    }
+    const stats = data.stats || {};
+    const events = Array.isArray(data.events) ? data.events : [];
 
     return (
-        <ThemedCard>
-            {/* Header */}
-            <h3 className="text-sm text-gray-400 uppercase font-medium mb-4">
+        <ThemedCard className="p-5 rounded-2xl bg-[#111116] border">
+            <h3 className="text-sm text-gray-400 uppercase font-medium mb-2">
                 GitHub Stats & Activity
             </h3>
 
@@ -90,37 +80,48 @@ export default function GitHubCard({ username }: GitHubCardProps) {
             <div className="flex flex-wrap gap-6 mb-4">
                 <div className="flex items-center gap-2">
                     <FaBook className="text-gray-400" />{' '}
-                    <span>{data.stats.public_repos} Repos</span>
+                    <span>{stats.public_repos ?? 0} Repos</span>
                 </div>
                 <div className="flex items-center gap-2">
                     <FaUser className="text-gray-400" />{' '}
-                    <span>{data.stats.followers} Followers</span>
+                    <span>{stats.followers ?? 0} Followers</span>
                 </div>
                 <div className="flex items-center gap-2">
                     <FaStar className="text-gray-400" />{' '}
-                    <span>{data.stats.following} Following</span>
+                    <span>{stats.following ?? 0} Following</span>
                 </div>
             </div>
 
             {/* Timeline */}
             <div className="space-y-3">
-                {data.events.map((event) => (
-                    <div key={event.id} className="flex items-start gap-2">
-                        <FaCodeBranch className="text-gray-400 mt-1" />
-                        <div className="text-sm">
-                            <span className="font-semibold">
-                                {event.type.replace('Event', '')}
-                            </span>{' '}
-                            in{' '}
-                            <span style={{ color: 'var(--accent-text)' }}>
-                                {event.repo.name}
-                            </span>
-                            <div className="text-gray-400 text-xs">
-                                {new Date(event.created_at).toLocaleString()}
+                {events.length > 0 ? (
+                    events.map((event) => (
+                        <div key={event.id} className="flex items-start gap-2">
+                            <FaCodeBranch className="text-gray-400 mt-1" />
+                            <div className="text-sm">
+                                <span className="font-semibold">
+                                    {event.type?.replace('Event', '') ||
+                                        'Unknown'}
+                                </span>{' '}
+                                in{' '}
+                                <span style={{ color: 'var(--accent-text)' }}>
+                                    {event.repo?.name || 'Unknown Repo'}
+                                </span>
+                                <div className="text-gray-400 text-xs">
+                                    {event.created_at
+                                        ? new Date(
+                                              event.created_at,
+                                          ).toLocaleString()
+                                        : 'Unknown time'}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ))}
+                    ))
+                ) : (
+                    <p className="text-gray-500 italic text-sm">
+                        No recent activity
+                    </p>
+                )}
             </div>
         </ThemedCard>
     );
