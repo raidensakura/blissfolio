@@ -132,7 +132,9 @@ export default function DiscordSpotifyCard() {
     if (!data || !data.discord_user) {
         return (
             <ThemedCard className="p-5 rounded-2xl bg-[#111116] border">
-                <p className="text-sm text-gray-400">Discord & Spotify</p>
+                <h3 className="text-sm text-gray-400 uppercase font-medium mb-2">
+                    Discord & Spotify
+                </h3>
                 <p className="mt-2 text-gray-500 italic">
                     Presence status unavailable
                 </p>
