@@ -48,6 +48,8 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 Feel free to edit the assets in `public` folder and config in `data` folder as you see fit.
 
+If you prefer to use your own Lanyard instance, customize the domain endpoint with `NEXT_PUBLIC_LANYARD_DOMAIN`.
+
 ## Credits
 
 This project is inspired by [Thusuzzee's website](https://z1.gg/).
