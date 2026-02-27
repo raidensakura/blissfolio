@@ -55,7 +55,13 @@ export default function DiscordSpotifyCard() {
         let heartbeat: NodeJS.Timeout;
 
         function connect() {
-            ws = new WebSocket('wss://api.lanyard.rest/socket');
+            const domain =
+                process.env.NEXT_PUBLIC_LANYARD_DOMAIN?.trim() ||
+                'api.lanyard.rest';
+
+            const endpoint = `wss://${domain}/socket`;
+
+            ws = new WebSocket(endpoint);
 
             ws.onopen = () => {
                 console.log('Connected to Lanyard WS');
