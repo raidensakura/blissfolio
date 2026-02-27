@@ -10,7 +10,6 @@ export default function CopyButton({ textToCopy }: { textToCopy: string }) {
         navigator.clipboard.writeText(textToCopy);
         setCopied(true);
 
-        // Hide the popup after 2 seconds
         setTimeout(() => setCopied(false), 2000);
     };
 
