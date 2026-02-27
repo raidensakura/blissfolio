@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { FaSpotify, FaDesktop, FaMobile, FaChrome } from 'react-icons/fa';
 import { ThemedCard } from './Cards/BaseCard';
 import { profile } from '../data/profile';
+
 const discordID = profile.discordID;
 
 interface DiscordUser {
@@ -20,11 +21,7 @@ interface DiscordActivity {
     state?: string;
     details?: string;
     timestamps?: { start: number; end?: number };
-    assets?: {
-        large_image?: string;
-        small_image?: string;
-        large_text?: string;
-    };
+    assets?: { large_image?: string; small_image?: string };
     application_id?: string;
 }
 
@@ -32,77 +29,92 @@ interface SpotifyData {
     song: string;
     artist: string;
     album_art_url: string;
-    timestamps?: { start: number; end: number };
+    timestamps?: { start: number; end?: number };
 }
 
 interface DiscordData {
-    discord_user: DiscordUser;
-    activities: DiscordActivity[];
-    discord_status: 'online' | 'idle' | 'dnd' | 'offline';
-    active_on_discord_web: boolean;
-    active_on_discord_desktop: boolean;
-    active_on_discord_mobile: boolean;
-    listening_to_spotify: boolean;
-    spotify: SpotifyData | null;
+    discord_user?: DiscordUser;
+    activities?: DiscordActivity[];
+    discord_status?: 'online' | 'idle' | 'dnd' | 'offline';
+    active_on_discord_web?: boolean;
+    active_on_discord_desktop?: boolean;
+    active_on_discord_mobile?: boolean;
+    listening_to_spotify?: boolean;
+    spotify?: SpotifyData | null;
 }
 
 export default function DiscordSpotifyCard() {
     const [data, setData] = useState<DiscordData | null>(null);
     const [now, setNow] = useState(() => Date.now());
+    const [connected, setConnected] = useState(false); // eslint-disable-line @typescript-eslint/no-unused-vars
 
     useEffect(() => {
         let ws: WebSocket | null = null;
         let heartbeat: NodeJS.Timeout;
+        let reconnectTimer: NodeJS.Timeout;
+
+        const domain =
+            process.env.NEXT_PUBLIC_LANYARD_DOMAIN?.trim() ||
+            'api.lanyard.rest';
+        const endpoint = `wss://${domain}/socket`;
 
         function connect() {
-            const domain =
-                process.env.NEXT_PUBLIC_LANYARD_DOMAIN?.trim() ||
-                'api.lanyard.rest';
+            try {
+                ws = new WebSocket(endpoint);
 
-            const endpoint = `wss://${domain}/socket`;
+                ws.onopen = () => {
+                    setConnected(true);
+                    ws?.send(
+                        JSON.stringify({
+                            op: 2,
+                            d: { subscribe_to_id: discordID },
+                        }),
+                    );
+                };
 
-            ws = new WebSocket(endpoint);
+                ws.onmessage = (event) => {
+                    try {
+                        const msg = JSON.parse(event.data);
 
-            ws.onopen = () => {
-                console.log('Connected to Lanyard WS');
+                        if (msg.error) {
+                            console.warn('Lanyard error:', msg.error.message);
+                            setData(null);
+                            return;
+                        }
 
-                // Subscribe to your user
-                ws?.send(
-                    JSON.stringify({
-                        op: 2,
-                        d: {
-                            subscribe_to_id: discordID,
-                        },
-                    }),
-                );
-            };
+                        switch (msg.op) {
+                            case 1: // Hello
+                                heartbeat = setInterval(() => {
+                                    if (ws?.readyState === WebSocket.OPEN) {
+                                        ws.send(JSON.stringify({ op: 3 }));
+                                    }
+                                }, msg.d?.heartbeat_interval || 30000);
+                                break;
 
-            ws.onmessage = (event) => {
-                const msg = JSON.parse(event.data);
+                            case 0: // Presence update
+                                setData(msg.d || null);
+                                break;
+                        }
+                    } catch (err) {
+                        console.warn('Failed to parse WS message', err);
+                        setData(null);
+                    }
+                };
 
-                switch (msg.op) {
-                    case 1:
-                        // Hello → start heartbeat
-                        heartbeat = setInterval(() => {
-                            ws?.send(JSON.stringify({ op: 3 }));
-                        }, msg.d.heartbeat_interval);
-                        break;
+                ws.onclose = () => {
+                    console.warn('Lanyard WS closed. Reconnecting in 5s...');
+                    setConnected(false);
+                    reconnectTimer = setTimeout(connect, 5000);
+                };
 
-                    case 0:
-                        // Presence update
-                        setData(msg.d);
-                        break;
-                }
-            };
-
-            ws.onclose = () => {
-                console.log('Lanyard WS closed, reconnecting...');
-                setTimeout(connect, 5000);
-            };
-
-            ws.onerror = () => {
-                ws?.close();
-            };
+                ws.onerror = (err) => {
+                    console.error('Lanyard WS error:', err);
+                    ws?.close();
+                };
+            } catch (err) {
+                console.error('Failed to connect WS:', err);
+                reconnectTimer = setTimeout(connect, 5000);
+            }
         }
 
         connect();
@@ -113,39 +125,38 @@ export default function DiscordSpotifyCard() {
             ws?.close();
             clearInterval(timer);
             clearInterval(heartbeat);
+            clearTimeout(reconnectTimer);
         };
     }, []);
 
-    if (!data) {
+    if (!data || !data.discord_user) {
         return (
-            <div
-                className="rounded-2xl border p-5 bg-[#111116]"
-                style={{ color: 'var(--accent-border)' }}
-            >
+            <ThemedCard className="p-5 rounded-2xl bg-[#111116] border">
                 <p className="text-sm text-gray-400">Discord & Spotify</p>
-                <p className="mt-2 text-gray-500 italic">Loading...</p>
-            </div>
+                <p className="mt-2 text-gray-500 italic">
+                    Presence status unavailable
+                </p>
+            </ThemedCard>
         );
     }
 
-    const customStatus = data.activities.find((a) => a.type === 4)?.state;
-    const gameActivity = data.activities.find((a) => a.type === 0);
+    const activities = data.activities || [];
+    const customStatus = activities.find((a) => a.type === 4)?.state;
+    const gameActivity = activities.find((a) => a.type === 0);
 
     const statusColor = {
         online: 'bg-green-400',
         idle: 'bg-yellow-400',
         dnd: 'bg-red-400',
         offline: 'bg-gray-500',
-    }[data.discord_status];
+    }[data.discord_status || 'offline'];
 
     const formatTimer = (start: number) => {
         const elapsed = Math.floor((now - start) / 1000);
         const hrs = Math.floor(elapsed / 3600);
         const mins = Math.floor((elapsed % 3600) / 60);
         const secs = elapsed % 60;
-        return `${hrs > 0 ? `${hrs}:` : ''}${
-            hrs > 0 ? String(mins).padStart(2, '0') : mins
-        }:${String(secs).padStart(2, '0')}`;
+        return `${hrs > 0 ? `${hrs}:` : ''}${hrs > 0 ? String(mins).padStart(2, '0') : mins}:${String(secs).padStart(2, '0')}`;
     };
 
     return (
@@ -157,7 +168,7 @@ export default function DiscordSpotifyCard() {
                 </h3>
                 <span
                     className={`w-3 h-3 rounded-full ${statusColor} border border-gray-800`}
-                    title={data.discord_status}
+                    title={data.discord_status || 'offline'}
                 />
             </div>
 
@@ -165,7 +176,7 @@ export default function DiscordSpotifyCard() {
             <div className="flex items-center gap-4 mt-3">
                 <Image
                     src={`https://cdn.discordapp.com/avatars/${data.discord_user.id}/${data.discord_user.avatar}.png`}
-                    alt={data.discord_user.username}
+                    alt={data.discord_user.username || 'Discord User'}
                     width={48}
                     height={48}
                     className="rounded-xl border-2 object-cover"
@@ -185,17 +196,14 @@ export default function DiscordSpotifyCard() {
                             data.discord_user.username}
                     </p>
 
-                    {/* Custom Status */}
                     {customStatus && (
                         <p className="text-gray-400 text-sm italic truncate">
                             {customStatus}
                         </p>
                     )}
 
-                    {/* Game/Playing Activity */}
                     {gameActivity && (
                         <div className="flex items-center gap-2 text-gray-400 text-sm mt-1">
-                            {/* Game Icon */}
                             {gameActivity.assets?.large_image &&
                                 gameActivity.application_id && (
                                     <Image
@@ -207,7 +215,6 @@ export default function DiscordSpotifyCard() {
                                     />
                                 )}
 
-                            {/* Name + Timer */}
                             <span className="truncate">
                                 {gameActivity.details ||
                                     gameActivity.state ||
@@ -225,7 +232,6 @@ export default function DiscordSpotifyCard() {
                         </div>
                     )}
 
-                    {/* Fallback */}
                     {!customStatus && !gameActivity && (
                         <p className="text-gray-500 italic text-sm">
                             No current activity
@@ -253,7 +259,6 @@ export default function DiscordSpotifyCard() {
                         } as React.CSSProperties
                     }
                 >
-                    {/* Album art */}
                     {data.spotify.album_art_url && (
                         <Image
                             src={data.spotify.album_art_url}
@@ -272,23 +277,13 @@ export default function DiscordSpotifyCard() {
                             {data.spotify.artist}
                         </p>
 
-                        {/* Progress Bar */}
                         {data.spotify.timestamps?.end &&
                             data.spotify.timestamps?.start && (
                                 <div className="h-1 w-full bg-gray-800 rounded-full mt-1 overflow-hidden">
                                     <div
                                         className="h-full bg-green-400"
                                         style={{
-                                            width: `${
-                                                ((now -
-                                                    data.spotify.timestamps
-                                                        .start) /
-                                                    (data.spotify.timestamps
-                                                        .end -
-                                                        data.spotify.timestamps
-                                                            .start)) *
-                                                100
-                                            }%`,
+                                            width: `${((now - data.spotify.timestamps.start) / (data.spotify.timestamps.end - data.spotify.timestamps.start)) * 100}%`,
                                         }}
                                     />
                                 </div>
