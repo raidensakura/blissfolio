@@ -12,7 +12,7 @@ interface DomainCardProps {
 export default function DomainCard({ domain }: DomainCardProps) {
     const [imgError, setImgError] = useState(false);
 
-    const faviconUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+    const faviconUrl = `https://icons.duckduckgo.com/ip3/${domain}.ico`;
 
     return (
         <ThemedCard>
