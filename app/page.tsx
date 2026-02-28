@@ -11,7 +11,7 @@ import GitHubContributions from '@/components/Common/GitHubContributions';
 import { SOCIALS } from '@/data/socials';
 import { GAMES } from '@/data/games';
 import { DOMAINS } from '@/data/domains';
-import { PC_SPECS } from '@/data/PCSpecs';
+import { PC_SPECS } from '@/data/pcSpecs';
 import { PROJECTS } from '@/data/projects';
 import { PROFILE } from '@/data/profile';
 import { TECH_STACK } from '@/data/techstack';
