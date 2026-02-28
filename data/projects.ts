@@ -5,7 +5,7 @@ export interface Project {
     icon?: string;
 }
 
-export const projects: Project[] = [
+export const PROJECTS: Project[] = [
     {
         title: 'Shogun',
         description:

@@ -25,4 +25,4 @@ export const themes = {
     },
 };
 
-export const theme = themes.green;
+export const THEME = themes.green;

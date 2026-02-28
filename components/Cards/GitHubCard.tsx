@@ -29,7 +29,7 @@ interface GitHubCardProps {
 
 export default function GitHubCard({ username }: GitHubCardProps) {
     const [data, setData] = useState<GitHubData>({ stats: {}, events: [] });
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true); // eslint-disable-line @typescript-eslint/no-unused-vars
 
     useEffect(() => {
         async function fetchGitHub() {

@@ -1,4 +1,4 @@
-export const pcSpecs = [
+export const PC_SPECS = [
     {
         name: 'CPU',
         value: 'AMD Ryzen 7 5700X3D',

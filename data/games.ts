@@ -1,4 +1,4 @@
-export const games = [
+export const GAMES = [
     {
         name: 'Arknights: Endfield',
         uid: '4707604490',

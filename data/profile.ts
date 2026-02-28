@@ -1,4 +1,4 @@
-export const profile = {
+export const PROFILE = {
     name: 'Raiden',
     description: `A mortal, transient being and a person who enjoys progress. 
         Maybe likes tech, anime and games a little too much.`,

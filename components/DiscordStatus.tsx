@@ -4,9 +4,9 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { FaSpotify, FaDesktop, FaMobile, FaChrome } from 'react-icons/fa';
 import { ThemedCard } from './Cards/BaseCard';
-import { profile } from '../data/profile';
+import { PROFILE } from '../data/profile';
 
-const discordID = profile.discordID;
+const discordID = PROFILE.discordID;
 
 interface DiscordUser {
     id: string;

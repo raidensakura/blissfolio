@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { FaDiscord } from 'react-icons/fa';
 import { Calendar, MapPin, Mail, User } from 'lucide-react';
 import Tag from '../Common/Tag';
-import { profile } from '../../data/profile';
+import { PROFILE } from '../../data/profile';
 
 export default function ProfileCard() {
     return (
@@ -65,22 +65,22 @@ export default function ProfileCard() {
                     className="text-2xl font-semibold"
                     style={{ color: 'var(--accent-text)' }}
                 >
-                    {profile.name}
+                    {PROFILE.name}
                 </h1>
 
-                <p className="text-gray-400">{profile.description}</p>
-                <p>{profile.love}</p>
+                <p className="text-gray-400">{PROFILE.description}</p>
+                <p>{PROFILE.love}</p>
 
                 <div className="grid grid-cols-2 gap-3 text-sm">
                     <Tag icon={<User size={16} />} label="he/him" />
                     <Tag
                         icon={<Calendar size={16} />}
-                        label={`${new Date().getFullYear() - profile.birthYear} years old`}
+                        label={`${new Date().getFullYear() - PROFILE.birthYear} years old`}
                     />
                     <div className="col-span-2">
                         <Tag
                             icon={<MapPin size={16} />}
-                            label={profile.location}
+                            label={PROFILE.location}
                         />
                     </div>
                 </div>
@@ -88,7 +88,7 @@ export default function ProfileCard() {
                 <button
                     className="btn-primary cursor-pointer"
                     onClick={() =>
-                        (window.location.href = `mailto:${profile.email}`)
+                        (window.location.href = `mailto:${PROFILE.email}`)
                     }
                 >
                     <Mail size={16} /> Contact Me
@@ -97,7 +97,7 @@ export default function ProfileCard() {
                 <button
                     className="btn-secondary cursor-pointer"
                     onClick={() =>
-                        (window.location.href = profile.discordInvite)
+                        (window.location.href = PROFILE.discordInvite)
                     }
                 >
                     <FaDiscord size={16} /> Join Discord Server

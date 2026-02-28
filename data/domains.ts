@@ -1,1 +1,1 @@
-export const domains = ['raidensakura.moe', 'project-mei.xyz'];
+export const DOMAINS = ['raidensakura.moe', 'project-mei.xyz'];

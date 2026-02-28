@@ -7,7 +7,7 @@ import {
 } from 'react-icons/fa';
 import { SiMyanimelist } from 'react-icons/si';
 
-export const socials = [
+export const SOCIALS = [
     {
         name: 'GitHub',
         value: 'Raiden',
