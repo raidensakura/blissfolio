@@ -9,10 +9,11 @@ export function ThemedCard({ children, className = '' }: ThemedCardProps) {
     return (
         <div
             className={`relative p-5 rounded-2xl border shadow-lg transition-transform duration-300
-            bg-gradient-to-br from-[#15151c] to-[#111116]
-            border-[var(--accent-border)]
-            hover:scale-105
-            ${className}`}
+                bg-gradient-to-br from-[#15151c] to-[#111116]
+                border-[var(--accent-border)]
+                hover:scale-105
+                w-auto max-w-full min-w-0
+                ${className}`}
             onMouseEnter={(e) => {
                 const el = e.currentTarget;
                 el.style.borderColor = 'var(--accent-end)';
