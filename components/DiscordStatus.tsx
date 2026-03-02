@@ -120,6 +120,47 @@ export default function DiscordSpotifyCard() {
         );
     }
 
+    if (data.discord_status === 'offline') {
+        return (
+            <ThemedCard>
+                <div className="flex items-center justify-between">
+                    <h3 className="text-sm text-gray-400 uppercase font-medium">
+                        Discord & Spotify
+                    </h3>
+                    <span className="w-3 h-3 rounded-full bg-gray-500 border border-gray-800" />
+                </div>
+
+                <div className="flex items-center gap-3 mt-4">
+                    <Image
+                        src={`https://cdn.discordapp.com/avatars/${data.discord_user.id}/${data.discord_user.avatar}.png`}
+                        alt={data.discord_user.username}
+                        width={48}
+                        height={48}
+                        className="rounded-xl border-2 object-cover"
+                        style={
+                            {
+                                borderColor: 'var(--accent-border)',
+                            } as React.CSSProperties
+                        }
+                    />
+
+                    <div>
+                        <p
+                            className="font-semibold"
+                            style={{ color: 'var(--accent-text)' }}
+                        >
+                            {data.discord_user.display_name ||
+                                data.discord_user.username}
+                        </p>
+                        <p className="text-gray-500 text-sm italic">
+                            Currently Offline
+                        </p>
+                    </div>
+                </div>
+            </ThemedCard>
+        );
+    }
+
     const activities = data.activities || [];
 
     const customStatus = activities.find((a) => a.type === 4)?.state;
