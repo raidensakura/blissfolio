@@ -14,9 +14,9 @@ export const PROJECTS: Project[] = [
         icon: '/projects/shogun.png',
     },
     {
-        title: 'Sirin Homeserver',
+        title: 'Sirin',
         description:
-            'Personal homeserver setup, running various services like Nextcloud, Jellyfin, and more.',
+            'My own mini PC at home running Proxmox VE for hosting purposes.',
         url: '#',
         icon: '/projects/sirin.jpg',
     },
