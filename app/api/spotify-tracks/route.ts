@@ -18,7 +18,7 @@ function decodeHtmlEntities(value: string) {
 function extractMetaTag(html: string, property: string) {
     const pattern = new RegExp(
         `<meta[^>]+(?:property|name)="${property}"[^>]+content="([^"]*)"`,
-        'i'
+        'i',
     );
 
     return html.match(pattern)?.[1] ?? '';
@@ -34,7 +34,9 @@ function parseOEmbedTitle(title: string) {
     };
 }
 
-async function fetchTrackMetaFromOEmbed(url: string): Promise<SpotifyTrackMeta> {
+async function fetchTrackMetaFromOEmbed(
+    url: string,
+): Promise<SpotifyTrackMeta> {
     const endpoint = `https://open.spotify.com/oembed?url=${encodeURIComponent(url)}`;
     const response = await fetch(endpoint, {
         next: { revalidate: 60 * 60 * 12 },
@@ -71,13 +73,15 @@ async function fetchTrackMeta(url: string): Promise<SpotifyTrackMeta> {
         });
 
         if (!response.ok) {
-            throw new Error(`Failed to fetch Spotify track: ${response.status}`);
+            throw new Error(
+                `Failed to fetch Spotify track: ${response.status}`,
+            );
         }
 
         const html = await response.text();
         const title = decodeHtmlEntities(extractMetaTag(html, 'og:title'));
         const artist = decodeHtmlEntities(
-            extractMetaTag(html, 'music:musician_description')
+            extractMetaTag(html, 'music:musician_description'),
         );
         const coverArtUrl = extractMetaTag(html, 'og:image');
 
@@ -97,7 +101,7 @@ export async function GET(request: Request) {
     if (urls.length === 0) {
         return NextResponse.json(
             { error: 'At least one Spotify track URL is required.' },
-            { status: 400 }
+            { status: 400 },
         );
     }
 
@@ -113,7 +117,7 @@ export async function GET(request: Request) {
                     coverArtUrl: '',
                 };
             }
-        })
+        }),
     );
 
     return NextResponse.json({ tracks });

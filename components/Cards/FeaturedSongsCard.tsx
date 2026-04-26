@@ -24,7 +24,7 @@ export default function FeaturedSongsCard({
             title: 'Spotify Track',
             artist: 'Open in Spotify',
             coverArtUrl: '',
-        }))
+        })),
     );
 
     useEffect(() => {
@@ -50,7 +50,7 @@ export default function FeaturedSongsCard({
                         title: track.title || 'Spotify Track',
                         artist: track.artist || 'Open in Spotify',
                         coverArtUrl: track.coverArtUrl || '',
-                    }))
+                    })),
                 );
             })
             .catch(() => {
@@ -60,7 +60,7 @@ export default function FeaturedSongsCard({
                         title: 'Spotify Track',
                         artist: 'Open in Spotify',
                         coverArtUrl: '',
-                    }))
+                    })),
                 );
             });
 
