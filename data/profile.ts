@@ -6,7 +6,7 @@ export const PROFILE = {
     pronouns: 'he/him',
     birthYear: 1999,
     location: 'Selangor, Malaysia',
-    email: 'raidensakurajima@gmail.com',
+    email: 'raiden@project-mei.xyz',
     discordInvite: 'https://dsc.gg/transience',
     discordID: '243316261264556032',
     githubUsername: 'raidensakura',
