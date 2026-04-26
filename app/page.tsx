@@ -3,6 +3,7 @@
 import TabsSection from '@/components/Tabs/TabsSection';
 import ProfileCard from '@/components/Cards/ProfileCard';
 import ProjectCard from '@/components/Cards/ProjectCard';
+import FeaturedSongsCard from '@/components/Cards/FeaturedSongsCard';
 import GitHubCard from '@/components/Cards/GitHubCard';
 import DiscordStatus from '@/components/DiscordStatus';
 import TechStack from '@/components/Cards/TechStack';
@@ -15,6 +16,7 @@ import { PC_SPECS } from '@/data/pcSpecs';
 import { PROJECTS } from '@/data/projects';
 import { PROFILE } from '@/data/profile';
 import { TECH_STACK } from '@/data/techstack';
+import { FEATURED_SONG_URLS } from '@/data/featuredSongs';
 
 export default function Home() {
     return (
@@ -60,6 +62,30 @@ export default function Home() {
                                 />
                             ))}
                         </div>
+                    </div>
+
+                    <div
+                        className="rounded-2xl border p-6 bg-[#111116]"
+                        style={
+                            {
+                                borderColor: 'var(--accent-border)',
+                                '--hover-color': 'var(--accent-start)',
+                            } as React.CSSProperties
+                        }
+                        onMouseEnter={(e) =>
+                            (e.currentTarget.style.borderColor =
+                                'var(--accent-end)')
+                        }
+                        onMouseLeave={(e) =>
+                            (e.currentTarget.style.borderColor =
+                                'var(--accent-border)')
+                        }
+                    >
+                        <h2 className="mb-4 text-xl font-semibold">
+                            Featured Songs
+                        </h2>
+
+                        <FeaturedSongsCard songUrls={FEATURED_SONG_URLS} />
                     </div>
 
                     <TabsSection
