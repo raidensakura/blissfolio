@@ -7,6 +7,13 @@ export const GAMES = [
         image: '/games/endfield.jpg',
     },
     {
+        name: 'Neverness to Everness',
+        uid: '218211249484',
+        region: 'SEA',
+        active: true,
+        image: '/games/nte.webp',
+    },
+    {
         name: 'Duet Night Abyss',
         uid: '6000531182016',
         region: 'SEA',
