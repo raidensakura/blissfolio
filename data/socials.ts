@@ -38,5 +38,10 @@ export const SOCIALS = [
         url: 'https://open.spotify.com/user/1ar2lpk0vrl5ap8yitcdcwshn',
         icon: FaSpotify,
     },
-    { name: 'Discord', value: 'raidensakura', url: 'https://discord.gg/ecjSWjTdsd', icon: FaDiscord },
+    {
+        name: 'Discord',
+        value: 'raidensakura',
+        url: 'https://discord.gg/ecjSWjTdsd',
+        icon: FaDiscord,
+    },
 ];
