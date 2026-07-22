@@ -34,26 +34,20 @@ export default function GitHubCard({ username }: GitHubCardProps) {
     useEffect(() => {
         async function fetchGitHub() {
             try {
-                // Stats
-                const statsRes = await fetch(
-                    `https://api.github.com/users/${username}`,
+                const response = await fetch(
+                    `/api/github-profile?username=${encodeURIComponent(username)}`,
                 );
-                const statsJson: GitHubStats = statsRes.ok
-                    ? await statsRes.json()
-                    : {};
 
-                // Events
-                const eventsRes = await fetch(
-                    `https://api.github.com/users/${username}/events/public`,
-                );
-                const eventsJson: GitHubEvent[] = eventsRes.ok
-                    ? await eventsRes.json()
-                    : [];
+                if (!response.ok) {
+                    throw new Error(`GitHub request failed: ${response.status}`);
+                }
+
+                const payload = (await response.json()) as GitHubData;
 
                 setData({
-                    stats: statsJson || {},
-                    events: Array.isArray(eventsJson)
-                        ? eventsJson.slice(0, 5)
+                    stats: payload.stats || {},
+                    events: Array.isArray(payload.events)
+                        ? payload.events.slice(0, 5)
                         : [],
                 });
             } catch (err) {
