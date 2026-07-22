@@ -17,7 +17,7 @@ export const GAMES = [
         name: 'Duet Night Abyss',
         uid: '6000531182016',
         region: 'SEA',
-        active: true,
+        active: false,
         image: '/games/dna.png',
     },
     {
