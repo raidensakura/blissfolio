@@ -56,29 +56,30 @@ export async function GET(request: Request) {
     }
 
     try {
-        const [statsResponse, eventsResponse, reposResponse] = await Promise.all([
-            fetch(
-                `https://api.github.com/users/${encodeURIComponent(username)}`,
-                {
-                    headers: getHeaders(),
-                    next: { revalidate: 60 * 60 },
-                },
-            ),
-            fetch(
-                `https://api.github.com/users/${encodeURIComponent(username)}/events/public`,
-                {
-                    headers: getHeaders(),
-                    next: { revalidate: 60 * 60 },
-                },
-            ),
-            fetch(
-                `https://api.github.com/users/${encodeURIComponent(username)}/repos?per_page=5&sort=updated`,
-                {
-                    headers: getHeaders(),
-                    next: { revalidate: 60 * 60 },
-                },
-            ),
-        ]);
+        const [statsResponse, eventsResponse, reposResponse] =
+            await Promise.all([
+                fetch(
+                    `https://api.github.com/users/${encodeURIComponent(username)}`,
+                    {
+                        headers: getHeaders(),
+                        next: { revalidate: 60 * 60 },
+                    },
+                ),
+                fetch(
+                    `https://api.github.com/users/${encodeURIComponent(username)}/events/public`,
+                    {
+                        headers: getHeaders(),
+                        next: { revalidate: 60 * 60 },
+                    },
+                ),
+                fetch(
+                    `https://api.github.com/users/${encodeURIComponent(username)}/repos?per_page=5&sort=updated`,
+                    {
+                        headers: getHeaders(),
+                        next: { revalidate: 60 * 60 },
+                    },
+                ),
+            ]);
 
         const stats = statsResponse.ok ? await statsResponse.json() : {};
         const events = eventsResponse.ok ? await eventsResponse.json() : [];
@@ -100,7 +101,8 @@ export async function GET(request: Request) {
                               return null;
                           }
 
-                          const commits = (await commitsResponse.json()) as GitHubCommit[];
+                          const commits =
+                              (await commitsResponse.json()) as GitHubCommit[];
                           const latestCommit = commits[0];
 
                           if (!latestCommit) {

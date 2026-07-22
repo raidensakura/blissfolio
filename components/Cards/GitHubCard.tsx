@@ -39,7 +39,9 @@ export default function GitHubCard({ username }: GitHubCardProps) {
                 );
 
                 if (!response.ok) {
-                    throw new Error(`GitHub request failed: ${response.status}`);
+                    throw new Error(
+                        `GitHub request failed: ${response.status}`,
+                    );
                 }
 
                 const payload = (await response.json()) as GitHubData;
