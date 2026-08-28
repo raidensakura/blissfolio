@@ -110,7 +110,7 @@ export default function TabsSection({
             </div>
 
             {/* Tab content */}
-            <div className="animate-fadeIn">
+            <div key={activeTab} className="animate-fadeIn">
                 {activeTab === 'socials' && (
                     <div className="grid md:grid-cols-2 gap-6">
                         {socials.map((s: any) => (

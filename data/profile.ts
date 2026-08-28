@@ -1,13 +1,13 @@
 export const PROFILE = {
     name: 'Raiden',
-    description: `A mortal, transient being and a person who enjoys progress. 
-        Maybe likes tech, anime and games a little too much.`,
-    love: '💖 Bubu',
+    description: `Software Engineer, DevOps & tinkerer at heart.
+    Shipping software from design stage to production.`,
+    love: '💚 Liqing & Fangyi',
     pronouns: 'he/him',
     birthYear: 1999,
     location: 'Selangor, Malaysia',
     email: 'raiden@project-mei.xyz',
-    discordInvite: 'https://dsc.gg/transience',
+    whatsapp: 'https://wa.me/zhfangyi',
     discordID: '243316261264556032',
     githubUsername: 'raidensakura',
 };

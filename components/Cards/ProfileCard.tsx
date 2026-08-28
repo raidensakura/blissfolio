@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { FaDiscord } from 'react-icons/fa';
+import { FaWhatsapp } from 'react-icons/fa';
 import { Calendar, MapPin, Mail, User } from 'lucide-react';
 import Tag from '../Common/Tag';
 import { PROFILE } from '../../data/profile';
@@ -96,11 +96,9 @@ export default function ProfileCard() {
 
                 <button
                     className="btn-secondary cursor-pointer"
-                    onClick={() =>
-                        (window.location.href = PROFILE.discordInvite)
-                    }
+                    onClick={() => (window.location.href = PROFILE.whatsapp)}
                 >
-                    <FaDiscord size={16} /> Join Discord Server
+                    <FaWhatsapp size={16} /> Chat on WhatsApp
                 </button>
             </div>
         </div>
