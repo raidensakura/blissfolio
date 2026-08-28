@@ -6,7 +6,7 @@ import {
     X,
     ChevronLeft,
     ChevronRight,
-    Globe,
+    AppWindowMac,
 } from 'lucide-react';
 import { useState, ReactNode } from 'react';
 import { createPortal } from 'react-dom';
@@ -65,8 +65,9 @@ export default function ProjectCard({
                             onError={() => setImgError(true)}
                         />
                     ) : (
-                        <Globe
-                            size={24}
+                        <AppWindowMac
+                            size={26}
+                            strokeWidth={1.5}
                             style={{ color: 'var(--accent-text)' }}
                         />
                     )}

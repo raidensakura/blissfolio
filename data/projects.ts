@@ -13,7 +13,7 @@ export const PERSONAL_PROJECTS: Project[] = [
         description:
             'Based on open source project, Red Discord Bot serving various utilities like moderation, fun commands, and more.',
         url: 'https://dash.project-mei.xyz',
-        icon: 'https://www.google.com/s2/favicons?sz=64&domain=dash.project-mei.xyz',
+        icon: 'https://v1.project-mei.xyz/images/logo.png',
     },
     {
         title: 'Sirin',
@@ -30,7 +30,7 @@ export const WORK_PROJECTS: Project[] = [
         description:
             'Commerce platform tailored for a local business. Built with CodeIgniter 4, Bootstrap, and MySQL.',
         url: 'https://artsoulfigurines.com',
-        icon: 'https://www.google.com/s2/favicons?sz=64&domain=artsoulfigurines.com',
+        icon: 'https://artsoulfigurines.com/favicon.ico',
         screenshots: ['/projects/work/artsoul.png'],
         discontinued: true,
     },
@@ -39,7 +39,7 @@ export const WORK_PROJECTS: Project[] = [
         description:
             'A modern zakat calculator and payment platform. Built with CodeIgniter 4, Bootstrap, and MySQL.',
         url: 'https://bayarzakatonline.com',
-        icon: 'https://www.google.com/s2/favicons?sz=64&domain=bayarzakatonline.com',
+        icon: 'https://bayarzakatonline.com/favicon.ico',
         screenshots: [
             '/projects/work/bayarzakat-1.png',
             '/projects/work/bayarzakat-2.png',
@@ -50,7 +50,7 @@ export const WORK_PROJECTS: Project[] = [
         description:
             'E-commerce-ready website for a modern event venue. Built with CodeIgniter 4, Bootstrap, and MySQL.',
         url: 'https://lanaianggun.com',
-        icon: 'https://www.google.com/s2/favicons?sz=64&domain=lanaianggun.com',
+        icon: 'https://lanaianggun.com/favicon.ico',
         screenshots: [
             '/projects/work/lanaianggun-1.png',
             '/projects/work/lanaianggun-2.png',
@@ -61,7 +61,7 @@ export const WORK_PROJECTS: Project[] = [
         description:
             'Insurance-oriented commerce website. Built with CodeIgniter 4, Bootstrap, and MySQL.',
         url: 'https://infotakaful.com',
-        icon: 'https://www.google.com/s2/favicons?sz=64&domain=infotakaful.com',
+        icon: 'https://infotakaful.com/favicon.ico',
         screenshots: ['/projects/work/tgcacademy.png'],
         discontinued: true,
     },
@@ -70,7 +70,7 @@ export const WORK_PROJECTS: Project[] = [
         description:
             'E-commerce-ready website for a modern event venue. Built with CodeIgniter 4, Bootstrap, and MySQL.',
         url: 'https://urbanparkhall.com',
-        icon: 'https://www.google.com/s2/favicons?sz=64&domain=urbanparkhall.com',
+        icon: 'https://urbanparkhall.com/favicon.ico',
         screenshots: ['/projects/work/urbanpark.png'],
         discontinued: true,
     },
@@ -79,7 +79,7 @@ export const WORK_PROJECTS: Project[] = [
         description:
             'Personal site for selling a Shopee affiliate course, with built-in payment and purchase features.',
         url: 'https://adawiyyahkhan.com',
-        icon: 'https://www.google.com/s2/favicons?sz=64&domain=adawiyyahkhan.com',
+        icon: 'https://adawiyyahkhan.com/favicon.ico',
         screenshots: ['/projects/work/adawiyyahkhan.png'],
     },
 ];

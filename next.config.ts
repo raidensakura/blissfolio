@@ -23,10 +23,6 @@ const nextConfig: NextConfig = {
                 protocol: 'https',
                 hostname: 'project-mei.xyz',
             },
-            {
-                protocol: 'https',
-                hostname: 'www.google.com',
-            },
         ],
     },
 };
