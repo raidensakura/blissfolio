@@ -138,8 +138,8 @@ export default function ProfileCard() {
                                 One more step
                             </h3>
                             <p className="text-sm text-gray-400 mb-4">
-                                WhatsApp will ask for a username key before
-                                the chat opens. Enter this key to reach me:
+                                WhatsApp will ask for a username key before the
+                                chat opens. Enter this key to reach me:
                             </p>
 
                             <div
