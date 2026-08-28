@@ -17,7 +17,11 @@ export default function ProjectsSection({
     const projects = activeTab === 'personal' ? personalProjects : workProjects;
 
     const tabs = [
-        { key: 'personal' as const, label: 'Personal', count: personalProjects.length },
+        {
+            key: 'personal' as const,
+            label: 'Personal',
+            count: personalProjects.length,
+        },
         { key: 'work' as const, label: 'Work', count: workProjects.length },
     ];
 
@@ -68,7 +72,9 @@ export default function ProjectsSection({
                             }}
                             className="flex items-center gap-2 transition-colors cursor-pointer"
                             style={{
-                                color: isActive ? 'var(--accent-text)' : '#b0b0b0',
+                                color: isActive
+                                    ? 'var(--accent-text)'
+                                    : '#b0b0b0',
                             }}
                         >
                             {tab.label}
@@ -78,7 +84,9 @@ export default function ProjectsSection({
                                     backgroundColor: isActive
                                         ? 'var(--accent-border)'
                                         : 'rgba(255, 255, 255, 0.1)',
-                                    color: isActive ? 'var(--accent-text)' : '#d0d0d0',
+                                    color: isActive
+                                        ? 'var(--accent-text)'
+                                        : '#d0d0d0',
                                 }}
                             >
                                 {tab.count}

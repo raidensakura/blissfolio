@@ -69,7 +69,7 @@ export default function GitHubContributions({
                             }}
                         />
                     </div>,
-                    document.body
+                    document.body,
                 )}
         </ThemedCard>
     );

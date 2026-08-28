@@ -43,7 +43,9 @@ export default function ProjectCard({
 
     const showPrev = () =>
         setPreviewIndex(
-            (i) => (i - 1 + (screenshots?.length ?? 1)) % (screenshots?.length ?? 1)
+            (i) =>
+                (i - 1 + (screenshots?.length ?? 1)) %
+                (screenshots?.length ?? 1),
         );
     const showNext = () =>
         setPreviewIndex((i) => (i + 1) % (screenshots?.length ?? 1));
@@ -189,7 +191,7 @@ export default function ProjectCard({
                             )}
                         </div>
                     </div>,
-                    document.body
+                    document.body,
                 )}
         </ThemedCard>
     );
