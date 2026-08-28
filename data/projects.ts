@@ -14,6 +14,7 @@ export const PERSONAL_PROJECTS: Project[] = [
             'Based on open source project, Red Discord Bot serving various utilities like moderation, fun commands, and more.',
         url: 'https://dash.project-mei.xyz',
         icon: 'https://v1.project-mei.xyz/images/logo.png',
+        screenshots: ['/projects/personal/shogun.png'],
     },
     {
         title: 'Sirin',
@@ -21,6 +22,7 @@ export const PERSONAL_PROJECTS: Project[] = [
             'My own mini PC at home running Proxmox VE for hosting purposes.',
         url: '#',
         icon: '/projects/sirin.jpg',
+        screenshots: ['/projects/personal/sirin.png'],
     },
 ];
 
