@@ -8,6 +8,7 @@ export const PROFILE = {
     location: 'Selangor, Malaysia',
     email: 'raiden@project-mei.xyz',
     whatsapp: 'https://wa.me/zhfangyi',
+    whatsappKey: '6698',
     discordID: '243316261264556032',
     githubUsername: 'raidensakura',
 };
