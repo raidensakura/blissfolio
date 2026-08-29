@@ -85,8 +85,8 @@ export default function ProjectCard({
                         <span
                             className="text-xs px-2 py-0.5 rounded-md self-start"
                             style={{
-                                backgroundColor: 'rgba(239,68,68,0.15)',
-                                color: 'rgb(248,113,113)',
+                                backgroundColor: 'rgba(115,115,115,0.15)',
+                                color: 'rgb(163,163,163)',
                             }}
                         >
                             Discontinued
